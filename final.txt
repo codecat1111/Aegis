@@ -1,0 +1,7 @@
+The Aegis HTML Vulnerability Analyser 1.0
+==========================================
+Your vulnerability Analysis is as follows:
+==========================================
+Form Issue: Insecure Form action /post.php found in document
+Comment Issue: Key is found in the HTML comment. PLEASE REMOVE
+Input Issue: Plaintext password input was found. Please change to password type input
