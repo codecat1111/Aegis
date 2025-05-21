@@ -1,3 +1,6 @@
 forms: false
 comments: false
 password_inputs: false
+inline_javascript: true
+password_autocomplete: true
+iframes: true
