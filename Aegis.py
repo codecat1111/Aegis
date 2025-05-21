@@ -37,6 +37,8 @@ if validators.url(url) or parsed_url.hostname in ["localhost", "127.0.0.1"]:
     comments = parsed_html.find_all(
         string=lambda text: isinstance(text, Comment))
     password_inputs = parsed_html.find_all('input', {'name': 'password'})
+    scripts = parsed_html.find_all('script')
+    iframes = parsed_html.find_all('iframe')
 
     if config.get('forms', True):
         for form in forms:
@@ -53,6 +55,17 @@ if validators.url(url) or parsed_url.hostname in ["localhost", "127.0.0.1"]:
         for password_input in password_inputs:
             if password_input.get('type') != 'password':
                 report += 'Input Issue: Plaintext password input was found. Please change to password type input\n'
+            if config.get('password_autocomplete', True) and password_input.get('autocomplete') != 'off':
+                report += 'Input Issue: Password input field does not have autocomplete="off".\n'
+    
+    if config.get('inline_javascript', True):
+        for script in scripts:
+            if not script.get('src'):
+                report += 'Inline JavaScript Issue: Inline JavaScript found. Consider moving to an external file.\n'
+
+    if config.get('iframes', True):
+        if iframes:
+            report += 'Iframe Issue: Found <iframe> tags. These can be a security risk if not used carefully.\n'
 else:
     print("Invalid URL. Please include full URL including HTTPS")
 

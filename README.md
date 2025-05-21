@@ -9,7 +9,9 @@
 - **URL Validation**: Verifies the validity of the provided URL, including support for localhost and standard web URLs.
 - **Form Security Analysis**: Inspects HTML forms for insecure actions, particularly those using non-HTTPS protocols, to prevent man-in-the-middle (MITM) attacks.
 - **Comment Scrutiny**: Detects sensitive information embedded in HTML comments, such as keys and credentials, which should be removed to prevent information leakage.
-- **Password Input Verification**: Identifies plaintext password input fields and recommends their conversion to secure password input types to protect user credentials.
+- **Password Input Verification**: Identifies plaintext password input fields and recommends their conversion to secure password input types to protect user credentials. It also checks if password fields have `autocomplete="off"` to prevent browsers from storing passwords.
+- **Inline JavaScript Detection**: Checks for inline JavaScript code which can be a potential security risk and suggests moving it to external files.
+- **Iframe Detection**: Identifies the use of `<iframe>` tags, which can be a security risk if not implemented carefully (e.g. clickjacking).
 - **Custom Configuration Support**: Allows for tailored analysis based on user-defined configuration files, providing flexibility and adaptability to specific security requirements.
 - **Detailed Reporting**: Generates a comprehensive vulnerability report, highlighting identified issues and providing actionable recommendations for remediation.
 
@@ -45,7 +47,9 @@ Aegis uses a YAML configuration file to customize the analysis. Below is an exam
 forms: false
 comments: true
 passwords: true
+inline_javascript: true
+password_autocomplete: true
+iframes: true
 ```
 ## Report Generation
 After running the analysis, Aegis generates a report summarizing the identified vulnerabilities and providing actionable recommendations.
-
